@@ -14,9 +14,14 @@ namespace ExerciseList.Service.Service
 
         public decimal GetTotal(CartDTO cartDTO)
         {
-            var deliveryValue = CorreiosSerivce.ShippingValue(cartDTO.User.Cep);
+            var totalCart = cartDTO.GetTotalCart();
 
-            return cartDTO.GetTotalCart() + deliveryValue;
+            if(totalCart < 100) 
+            {
+                totalCart += CorreiosSerivce.ShippingValue(cartDTO.User.Cep);
+            }
+
+            return totalCart;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace ExerciseList.Service.Service
 
         public void AddItem(ProductDTO productDTO, int quantity)
         {
-            if (CartDTO != null && quantity != 0 && productDTO != null)
+            if (CartDTO != null && quantity > 0 && productDTO != null)
             {
                 CartItemDTO item = new CartItemDTO(productDTO, quantity);
                 var cartItem = CartDTO.CartItems.Where(w => w.Product.Id == productDTO.Id).FirstOrDefault();
@@ -50,7 +50,7 @@ namespace ExerciseList.Service.Service
         {
             bool isRemoved = false;
 
-            if (CartDTO != null)
+            if (CartDTO != null && quantity > 0)
             {
                 var cartItem = CartDTO.CartItems.Where(w => w.Product.Id == productDTO.Id).FirstOrDefault();
 
@@ -58,7 +58,7 @@ namespace ExerciseList.Service.Service
                 {
                     cartItem.Quantity -= quantity;
 
-                    if (cartItem.Quantity < 0)
+                    if (cartItem.Quantity <= 0)
                     {
                         CartDTO.CartItems.Remove(cartItem);
                     }
